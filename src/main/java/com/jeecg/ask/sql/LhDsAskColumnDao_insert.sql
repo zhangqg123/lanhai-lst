@@ -1,0 +1,23 @@
+INSERT  INTO
+	lh_ds_ask_column
+      ( 
+      ID                            
+      ,IMAGE_HREF                     
+      ,IMAGE_NAME                     
+      ,COLUMN_NAME                    
+      ,TYPE                           
+      ,PARENT_CODE                    
+      ,HREF                           
+      ,OWNER                          
+      ) 
+values
+      (
+      :lhDsAskColumn.id                            
+      ,:lhDsAskColumn.imageHref                     
+      ,:lhDsAskColumn.imageName                     
+      ,:lhDsAskColumn.columnName                    
+      ,:lhDsAskColumn.type                          
+      ,:lhDsAskColumn.parentCode                    
+      ,:lhDsAskColumn.href                          
+      ,:lhDsAskColumn.owner                         
+      )

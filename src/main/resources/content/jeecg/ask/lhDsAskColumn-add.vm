@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+								<button type="button" class="btn btn-primary" id="formSubmit"><span class="fa fa-save"></span> 保存</button>
+				<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/jeecg/lhDsAskColumn.do?list')"><span class="fa fa-arrow-circle-left"></span> 返回</button>
+				</div>
+				<div class="panel-body">
+					<form class="form-horizontal" role="form" id="dailogForm" action="$!{basePath}/jeecg/lhDsAskColumn.do?doAdd" method="POST">
+						<input type="hidden" id="btn_sub" class="btn_sub" />
+									<div class="form-group mno">
+										<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">类别名称</label>
+										<div class="col-sm-8">
+											<input type="text" value="$!{lhDsAskColumn.columnName}" name="columnName" id="columnName" class="form-control" />
+										</div>
+									</div>
+									<div class="form-group mno">
+										<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">类型</label>
+										<div class="col-sm-8">
+											<input type="text" value="$!{lhDsAskColumn.type}" name="type" id="type" class="form-control" />
+										</div>
+									</div>
+									<div class="form-group mno">
+										<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">父节点</label>
+										<div class="col-sm-8">
+											<input type="text" value="$!{lhDsAskColumn.parentCode}" name="parentCode" id="parentCode" class="form-control" />
+										</div>
+									</div>
+							<!--		<div class="form-group mno">
+										<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">图片地址</label>
+										<div class="col-sm-8">
+											<input type="text" value="$!{lhDsAskColumn.imageHref}" name="imageHref" id="imageHref" class="form-control" />
+										</div>
+									</div>	-->
+							<div class="form-group mno">
+    							<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">图片地址</label>
+    							<div class="col-sm-8">
+    								<input type="hidden" id="imageHref" name="imageHref" />
+    								<div id="fileQueue" style="width:200px;"></div>
+    								<input type="file" name="uploadify" id="uploadify" />
+    								<div id="pic_view_div" style="width:180px; height:150px; display:none;">
+    									<img src="#" width="180" height="150" id="pic_view" />
+    								</div>
+    							</div>
+    						</div>
+									<div class="form-group mno">
+										<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">图片名称</label>
+										<div class="col-sm-8">
+											<input type="text" value="$!{lhDsAskColumn.imageName}" name="imageName" id="imageName" class="form-control" />
+										</div>
+									</div>
+									<div class="form-group mno">
+										<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">地址</label>
+										<div class="col-sm-8">
+											<input type="text" value="$!{lhDsAskColumn.href}" name="href" id="href" class="form-control" />
+										</div>
+									</div>
+									<div class="form-group mno">
+										<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">所有人</label>
+										<div class="col-sm-8">
+											<input type="text" value="$!{lhDsAskColumn.owner}" name="owner" id="owner" class="form-control" />
+										</div>
+									</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="$!{basePath}/plug-in-ui/js/Validform_v5.3.2.js"></script> 
+<script type="text/javascript" src="$!{basePath}/plug-in-ui/js/forminit.p3.js"></script> 
+######################上传部分js#######################################################################
+<script src="$!{basePath}/content/plug-in/uploadify/jquery.uploadify.min.js" type="text/javascript"></script>
+<link rel="stylesheet" href="$!{basePath}/content/plug-in/uploadify/uploadify.css" />
+<script type="text/javascript">
+     jQuery(function(){
+		jQuery("#uploadify").uploadify({
+            'swf'            : '$!{basePath}/content/plug-in/uploadify/uploadify.swf',  
+            'uploader'       : '$!{basePath}/jeecg/lhDsAsk/upload/doUpload.do;jsessionid=$!{sessionid}',
+            'queueID'        : 'fileQueue',  
+            'auto'           : true,  
+            'multi'          : true,
+            'buttonCursor'   : 'hand',  
+            'dataType' : 'json',
+            'fileObjName'    : 'file',  
+            'buttonText'     : '上传图片',  
+            'height'         : '25',  
+            'progressData'   : 'percentage',  
+            'fileTypeDesc'   : '支持格式:jpg/gif/jpeg/png/bmp.',    
+            'fileTypeExts': '*.jpg;*.gif;*.jpeg;*.png;*.bmp',//允许的格式         
+            onUploadStart : function(file) {
+//                   alert("建议上传1:1比例的图片");
+            },
+            'onUploadSuccess' : function(file, data, response) { 
+            
+            var parsedJson = jQuery.parseJSON(data); 
+                //设置图片预览  
+                jQuery("#imageHref").val(parsedJson.obj);
+    			jQuery("#pic_view_div").show();
+               	jQuery("#pic_view").attr("src",'$!{basePath}/upload/img/lst/' + parsedJson.obj);  
+            }  
+        });
+	})
+</script>

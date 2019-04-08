@@ -1,0 +1,296 @@
+#parse("content/base/back/common/macro.vm")
+<!DOCTYPE html>
+<html lang="en">
+#parse("content/base/back/common/head.vm")
+<body style='overflow:scroll;overflow-x:hidden'>
+	<div class="container bs-docs-container" style="width:100%;">
+		<div class="row">
+			<form role="form" class="form-inline" action="$!{basePath}/jeecg/lhDsAsk.do?list" method="post"  id="formSubmit">
+				<div  class="col-md-10" style="width:100%">
+					<div class="panel panel-default">
+						<div class="panel-heading">列表</div>
+						<div class="panel-body">
+							<div class="search">
+									<!--	 <div class="form-group col-sm-3">
+											<label for="askTitle" class="control-label col-sm-3 line34">提问标题</label>
+											<div class="col-sm-8">
+												<input type="text" name="askTitle" id="askTitle" value="$!{lhDsAsk.askTitle}" class="form-control">
+											</div>
+										 </div>
+										 <div class="form-group col-sm-3">
+											<label for="description" class="control-label col-sm-3 line34"> 问题描述</label>
+											<div class="col-sm-8">
+												<input type="text" name="description" id="description" value="$!{lhDsAsk.description}" class="form-control">
+											</div>
+											</div>	-->
+										 <div class="form-group col-sm-3">
+											<label for="categoryId" class="control-label col-sm-3 line34">分类</label>
+											<div class="col-sm-8">
+												<input type="text" name="categoryId" id="categoryId" value="$!{lhDsAsk.categoryId}" class="form-control">
+											</div>
+										 </div>
+									<!--	 <div class="form-group col-sm-3">
+											<label for="askUrl" class="control-label col-sm-3 line34">提问视频</label>
+											<div class="col-sm-8">
+												<input type="text" name="askUrl" id="askUrl" value="$!{lhDsAsk.askUrl}" class="form-control">
+											</div>
+										 </div>
+										 <div class="form-group col-sm-3">
+											<label for="transAskUrl" class="control-label col-sm-3 line34">提问翻译视频</label>
+											<div class="col-sm-8">
+												<input type="text" name="transAskUrl" id="transAskUrl" value="$!{lhDsAsk.transAskUrl}" class="form-control">
+											</div>
+										 </div>
+										 <div class="form-group col-sm-3">
+											<label for="answerUrl" class="control-label col-sm-3 line34">回答视频</label>
+											<div class="col-sm-8">
+												<input type="text" name="answerUrl" id="answerUrl" value="$!{lhDsAsk.answerUrl}" class="form-control">
+											</div>
+										 </div>
+										 <div class="form-group col-sm-3">
+											<label for="transAnswerUrl" class="control-label col-sm-3 line34">回答翻译视频</label>
+											<div class="col-sm-8">
+												<input type="text" name="transAnswerUrl" id="transAnswerUrl" value="$!{lhDsAsk.transAnswerUrl}" class="form-control">
+											</div>
+										 </div>
+										 <div class="form-group col-sm-3">
+											<label for="askNum" class="control-label col-sm-3 line34">问题数量</label>
+											<div class="col-sm-8">
+												<input type="text" name="askNum" id="askNum" value="$!{lhDsAsk.askNum}" class="form-control">
+											</div>
+										 </div>
+										 <div class="form-group col-sm-3">
+											<label for="askStatus" class="control-label col-sm-3 line34">提问状态</label>
+											<div class="col-sm-8">
+												<input type="text" name="askStatus" id="askStatus" value="$!{lhDsAsk.askStatus}" class="form-control">
+											</div>
+										 </div>
+										 <div class="form-group col-sm-3">
+											<label for="askPersonId" class="control-label col-sm-3 line34">提问人</label>
+											<div class="col-sm-8">
+												<input type="text" name="askPersonId" id="askPersonId" value="$!{lhDsAsk.askPersonId}" class="form-control">
+											</div>
+										 </div>
+										 <div class="form-group col-sm-3">
+											<label for="askOpenId" class="control-label col-sm-3 line34">提问人openid</label>
+											<div class="col-sm-8">
+												<input type="text" name="askOpenId" id="askOpenId" value="$!{lhDsAsk.askOpenId}" class="form-control">
+											</div>
+										 </div>
+										<div class="form-group col-sm-3">
+											<label for="askDate" class="control-label col-sm-3 line34">提问日期 </label>
+											<div class="col-sm-8">
+												<input type="text" name="askDate" id="askDate" value="$!dateTool.format('yyyy-MM-dd',$!{lhDsAsk.askDate})" class="form-control">
+											</div>
+										 </div>
+										 <div class="form-group col-sm-3">
+											<label for="dealPersonId" class="control-label col-sm-3 line34">办理人员</label>
+											<div class="col-sm-8">
+												<input type="text" name="dealPersonId" id="dealPersonId" value="$!{lhDsAsk.dealPersonId}" class="form-control">
+											</div>
+										 </div>
+										 <div class="form-group col-sm-3">
+											<label for="dealOpenId" class="control-label col-sm-3 line34">办理人员openid</label>
+											<div class="col-sm-8">
+												<input type="text" name="dealOpenId" id="dealOpenId" value="$!{lhDsAsk.dealOpenId}" class="form-control">
+											</div>
+										 </div>
+										<div class="form-group col-sm-3">
+											<label for="dealDate" class="control-label col-sm-3 line34">办理日期</label>
+											<div class="col-sm-8">
+												<input type="text" name="dealDate" id="dealDate" value="$!dateTool.format('yyyy-MM-dd',$!{lhDsAsk.dealDate})" class="form-control">
+											</div>
+										 </div>
+										 <div class="form-group col-sm-3">
+											<label for="audit" class="control-label col-sm-3 line34">审核人 </label>
+											<div class="col-sm-8">
+												<input type="text" name="audit" id="audit" value="$!{lhDsAsk.audit}" class="form-control">
+											</div>
+										 </div>
+										 <div class="form-group col-sm-3">
+											<label for="reply" class="control-label col-sm-3 line34">回复</label>
+											<div class="col-sm-8">
+												<input type="text" name="reply" id="reply" value="$!{lhDsAsk.reply}" class="form-control">
+											</div>
+										 </div>
+										 <div class="form-group col-sm-3">
+											<label for="processinstanceid" class="control-label col-sm-3 line34">流程号</label>
+											<div class="col-sm-8">
+												<input type="text" name="processinstanceid" id="processinstanceid" value="$!{lhDsAsk.processinstanceid}" class="form-control">
+											</div>
+										 </div>
+										 <div class="form-group col-sm-3">
+											<label for="remark" class="control-label col-sm-3 line34">备注</label>
+											<div class="col-sm-8">
+												<input type="text" name="remark" id="remark" value="$!{lhDsAsk.remark}" class="form-control">
+											</div>
+										 </div>
+										 <div class="form-group col-sm-3">
+											<label for="formId" class="control-label col-sm-3 line34">formId</label>
+											<div class="col-sm-8">
+												<input type="text" name="formId" id="formId" value="$!{lhDsAsk.formId}" class="form-control">
+											</div>
+											</div>	-->
+								<button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> 搜  索</button>
+								<button type="button" class="btn btn-primary" onclick="searchReset()"><i class="fa fa-refresh"></i> 重  置</button>
+								<div class="clearfix"></div>
+							</div>
+							<div id="legend">
+								<legend  class="le">
+									<button type="button" class="btn btn-primary" onclick="doUrl('$!{basePath}/jeecg/lhDsAsk.do?toAdd')" ><i class="fa fa-plus"></i> 新增</button> 
+									<button type="button" class="btn btn-primary" onclick="batchDelete()" ><i class="fa fa-trash-o"></i> 批量删除</button>
+								</legend>
+							</div>
+							<table class="table table-striped">
+								<thead>
+									<th>
+											<input type="checkbox" name="ckAll" id="ckAll" />
+					        		</th>
+											<th>提问标题</th>
+									<!--		<th> 问题描述</th>	-->
+											<th>分类</th>
+									<!--		<th>提问视频</th>
+											<th>提问翻译视频</th>
+											<th>回答视频</th>
+											<th>回答翻译视频</th>
+											<th>问题数量</th>	-->
+											<th>提问状态</th>
+											<th>提问人</th>
+									<!--		<th>提问人openid</th>	-->
+											<th>提问日期 </th>
+									<!--		<th>办理人员</th>
+											<th>办理人员openid</th>
+											<th>办理日期</th>
+											<th>审核人 </th>
+											<th>回复</th>
+											<th>流程号</th>
+											<th>备注</th>
+											<th>formId</th>	-->
+									<th>操作</th>
+								</thead>
+								<tbody>
+								#if($!{pageInfos})
+									#foreach($!{info} in $!{pageInfos})
+										<tr>	
+											<td>
+													<input type="checkbox" name="ck" id="ck_$!{velocityCount}" value="$!{info.id}"/>
+											</td>	
+														<td>$!{info.askTitle}</td>
+											<!--			<td>$!{info.description}</td>	-->
+														<td>
+														 #foreach($column in $columnList)
+															#if($!{info.categoryId} == ${column.id})
+																$!{column.columnName}
+															#end
+														 #end
+														</td>
+											<!--			<td>$!{info.askUrl}</td>
+														<td>$!{info.transAskUrl}</td>
+														<td>$!{info.answerUrl}</td>
+														<td>$!{info.transAnswerUrl}</td>
+														<td>$!{info.askNum}</td>	-->
+														<td>$!{info.askStatus}</td>
+														<td>$!{info.askPersonId}</td>
+											<!--			<td>$!{info.askOpenId}</td>	-->
+														<td>$!dateTool.format("yyyy-MM-dd",$!{info.askDate})</td>
+											<!--			<td>$!{info.dealPersonId}</td>
+														<td>$!{info.dealOpenId}</td>
+														<td>$!dateTool.format("yyyy-MM-dd",$!{info.dealDate})</td>
+														<td>$!{info.audit}</td>
+														<td>$!{info.reply}</td>
+														<td>$!{info.processinstanceid}</td>
+														<td>$!{info.remark}</td>
+														<td>$!{info.formId}</td>	-->
+											<td class="last">
+											<a class="btn btn-success btn-xs"  href="javascript:doUrl('$!{basePath}/jeecg/lhDsAsk.do?toEdit&id=$!{info.id}')" ><i class="fa fa-edit"></i> 编辑</a>
+											<a class="btn btn-danger btn-xs" href="javascript:delData('$!{basePath}/jeecg/lhDsAsk.do?doDelete&id=$!{info.id}')"><i class="fa fa-trash-o"></i> 删除</a>
+											</td>
+										</tr>
+									 #end
+								 #end
+								</tbody>
+							</table>
+							<div class="text-right">
+								<!--公用翻页代码-->
+								#set($attr='formSubmit')
+								#showPageList($pageInfos $attr)
+								<!--END公用翻页代码-->
+							</div>
+						</div>
+					</div>
+				</div>  
+			</form>
+		</div>
+	</div>
+</body>
+</html>
+<script>
+$("#ckAll").click(function(){ 
+	if($(this).prop("checked")){ 
+	 $(":checkbox").prop("checked",true) 
+	}else{ 
+	$(":checkbox").prop("checked",false)  
+	} 
+}); 
+
+//jquery获取复选框值    
+function getCkValue(){  
+  var chk_value =[];    
+  $('input[name="ck"]:checked').each(function(){    
+   chk_value.push($(this).val());    
+  });    
+  //alert(chk_value.length==0 ?'你还没有选择任何内容！':chk_value);    
+}
+//获得所有选中行的ID进行批量删除
+function batchDelete() {
+    var ids = [];
+    var check = document.getElementsByName("ck");
+    for(var i=0;i<check.length;i++){
+        if(check[i].checked){
+    		ids.push(check[i].value);
+        }
+    }
+   	if(ids.length > 0) {
+    	parent.layer.confirm('确认进行批量删除吗？', {
+        	btn: ['确定','取消'] //按钮
+    	}, function(){
+       		jQuery.ajax({
+       			url : '$!{basePath}/jeecg/lhDsAsk.do?batchDelete',
+       			data : {
+       				ids : ids,
+       			},
+       			type : 'POST',
+    			dataType: 'json',
+       			traditional:true,
+    			success:function(data) {
+    				if(data.success){
+    					parent.layer.alert(data.msg, {
+    	        	        icon: 1,
+    	        	        shadeClose: false,
+    	        	        title: '提示'
+    	        	    },function(index){
+    						document.getElementById('formSubmit').submit();
+    	        	    	parent.layer.close(index);
+    					});
+    				}else {
+    					layeralert(data.msg,0);
+    				}
+    			},
+    			error: function(data, status, e){  
+    	        	if(data.status == "401"){
+    	        		layeralert("没有权限！",0);
+    					return;
+    				}
+    	        }
+       		});
+		});
+   	}else {
+		layeralert("您还没有选择要删除的行");
+   	}
+}
+//重置按钮    
+function searchReset() {
+	$("#formSubmit").find(":input").val("");
+	$("#formSubmit").submit();
+}
+</script>
