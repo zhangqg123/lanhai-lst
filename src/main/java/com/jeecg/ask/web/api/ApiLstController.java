@@ -78,23 +78,23 @@ public class ApiLstController extends BaseController {
 		AjaxJson j = new AjaxJson();
 		try {
 			LhDsAskEntity tmpAsk = lhDsAskService.get(lstAsk.getId());
-			if(lstAsk.getDescription()!=null || lstAsk.getDescription()!=""){
+			if(lstAsk.getDescription()!=null && lstAsk.getDescription()!=""){
 				tmpAsk.setDescription(lstAsk.getDescription());				
 			}
-			if(lstAsk.getTransAskUrl()!=null || lstAsk.getTransAskUrl()!=""){
+			if(lstAsk.getTransAskUrl()!=null && lstAsk.getTransAskUrl()!=""){
 				tmpAsk.setTransAskUrl(lstAsk.getTransAskUrl());			
 			}
-			if(lstAsk.getAnswerUrl()!=null || lstAsk.getAnswerUrl()!=""){
+			if(lstAsk.getAnswerUrl()!=null && lstAsk.getAnswerUrl()!=""){
 				tmpAsk.setAnswerUrl(lstAsk.getAnswerUrl());			
 			}
-			if(lstAsk.getTransAnswerUrl()!=null || lstAsk.getTransAnswerUrl()!=""){
+			if(lstAsk.getTransAnswerUrl()!=null && lstAsk.getTransAnswerUrl()!=""){
 				tmpAsk.setTransAnswerUrl(lstAsk.getTransAnswerUrl());			
 			}
 			if(lstAsk.getAskStatus()!=null){
 				tmpAsk.setAskStatus(lstAsk.getAskStatus());		
 			}
 			
-			
+			tmpAsk.setDealOpenId(lstAsk.getDealOpenId());
 			lhDsAskService.update(tmpAsk);
 			j.setMsg("保存成功");
 		} catch (Exception e) {
