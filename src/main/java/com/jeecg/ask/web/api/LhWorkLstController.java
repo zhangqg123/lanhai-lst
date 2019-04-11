@@ -64,6 +64,19 @@ public class LhWorkLstController extends BaseController{
 		if(categoryId!=null && categoryId!="" && !categoryId.equals("all")){
 			query.setCategoryId(categoryId);
 		}
+		String openId = request.getParameter("openId");
+		String mode = request.getParameter("mode");
+		if(openId!=null && openId!=""){
+			if(mode.equals("create")){
+				query.setAskOpenId(openId);					
+			}
+			if(mode.equals("trans")){
+				query.setDealOpenId(openId);					
+			}
+			if(mode.equals("answer")){
+				query.setAnswerOpenId(openId);					
+			}
+		}
 		MiniDaoPage<LhDsAskEntity> list = lhDsAskService.getAll(query, pageNo, pageSize);
 		// 分页数据
 //		List<?> resut = list.getResults();

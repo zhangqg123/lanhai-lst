@@ -93,8 +93,13 @@ public class ApiLstController extends BaseController {
 			if(lstAsk.getAskStatus()!=null){
 				tmpAsk.setAskStatus(lstAsk.getAskStatus());		
 			}
+			if(lstAsk.getDealOpenId()!=null && lstAsk.getDealOpenId()!=""){
+				tmpAsk.setDealOpenId(lstAsk.getDealOpenId());
+			}			
+			if(lstAsk.getAnswerOpenId()!=null && lstAsk.getAnswerOpenId()!=""){
+				tmpAsk.setAnswerOpenId(lstAsk.getAnswerOpenId());
+			}
 			
-			tmpAsk.setDealOpenId(lstAsk.getDealOpenId());
 			lhDsAskService.update(tmpAsk);
 			j.setMsg("保存成功");
 		} catch (Exception e) {

@@ -62,6 +62,10 @@
 		    /* 办理日期 */
 			and lda.DEAL_DATE = :lhDsAsk.dealDate
 		</#if>
+		<#if ( lhDsAsk.answerOpenId )?? && lhDsAsk.answerOpenId ?length gt 0>
+		    /* 办理人员openid */
+			and lda.ANSWER_OPEN_ID = :lhDsAsk.answerOpenId
+		</#if>
 		<#if ( lhDsAsk.audit )?? && lhDsAsk.audit ?length gt 0>
 		    /* 审核人  */
 			and lda.AUDIT = :lhDsAsk.audit

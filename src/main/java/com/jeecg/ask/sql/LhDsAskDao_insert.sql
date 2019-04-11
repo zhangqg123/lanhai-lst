@@ -16,7 +16,8 @@ INSERT  INTO
       ,ASK_DATE                       
       ,DEAL_PERSON_ID                 
       ,DEAL_OPEN_ID                   
-      ,DEAL_DATE                      
+      ,DEAL_DATE         
+      ,ANSWER_OPEN_ID
       ,AUDIT                          
       ,REPLY                          
       ,PROCESSINSTANCEID              
@@ -41,6 +42,7 @@ values
       ,:lhDsAsk.dealPersonId                  
       ,:lhDsAsk.dealOpenId                    
       ,:lhDsAsk.dealDate                      
+      ,:lhDsAsk.answerOpenId                    
       ,:lhDsAsk.audit                         
       ,:lhDsAsk.reply                         
       ,:lhDsAsk.processinstanceid             

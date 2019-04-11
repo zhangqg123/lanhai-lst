@@ -48,6 +48,9 @@ SET
 	    <#if lhDsAsk.dealDate ?exists>
 		   DEAL_DATE = :lhDsAsk.dealDate,
 		</#if>
+	   <#if lhDsAsk.answerOpenId ?exists>
+		   ANSWER_OPEN_ID = :lhDsAsk.answerOpenId,
+		</#if>
 	   <#if lhDsAsk.audit ?exists>
 		   AUDIT = :lhDsAsk.audit,
 		</#if>
