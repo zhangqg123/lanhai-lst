@@ -1,7 +1,11 @@
 package com.jeecg.ask.web;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,10 +24,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.jeecg.ask.entity.AskStatusEntity;
 import com.jeecg.ask.entity.LhDsAskColumnEntity;
 import com.jeecg.ask.entity.LhDsAskEntity;
 import com.jeecg.ask.service.LhDsAskColumnService;
 import com.jeecg.ask.service.LhDsAskService;
+import com.jeecg.ask.utils.LstConstants;
 
  /**
  * 描述：提问表
@@ -52,9 +58,11 @@ public class LhDsAskController extends BaseController{
 			 	//分页数据
 				MiniDaoPage<LhDsAskColumnEntity> clist =  lhDsAskColumnService.getAll(new LhDsAskColumnEntity(),1,100);
 				MiniDaoPage<LhDsAskEntity> list =  lhDsAskService.getAll(query,pageNo,pageSize);
+				List<AskStatusEntity> statusList = getStatusList();
 				VelocityContext velocityContext = new VelocityContext();
 				velocityContext.put("lhDsAsk",query);
 				velocityContext.put("columnList", clist.getResults());
+				velocityContext.put("statusList", statusList);
 				velocityContext.put("pageInfos",SystemTools.convertPaginatedList(list));
 				String viewName = "jeecg/ask/lhDsAsk-list.vm";
 				ViewVelocity.view(request,response,viewName,velocityContext);
@@ -122,11 +130,40 @@ public class LhDsAskController extends BaseController{
 		MiniDaoPage<LhDsAskColumnEntity> list =  lhDsAskColumnService.getAll(new LhDsAskColumnEntity(),1,100);
 		VelocityContext velocityContext = new VelocityContext();
 		LhDsAskEntity lhDsAsk = lhDsAskService.get(id);
+		List<AskStatusEntity> statusList = getStatusList();
+		
 		String sessionid = request.getSession().getId();
 		velocityContext.put("sessionid", sessionid);
 		velocityContext.put("lhDsAsk",lhDsAsk);
 		velocityContext.put("columnList", list.getResults());
+		velocityContext.put("statusList", statusList);
 		String viewName = "jeecg/ask/lhDsAsk-edit.vm";
+		ViewVelocity.view(request,response,viewName,velocityContext);
+	}
+
+	private List<AskStatusEntity> getStatusList() {
+		List<AskStatusEntity> statusList=new ArrayList<AskStatusEntity>();
+		statusList.add(new AskStatusEntity(LstConstants.CREATE_ASK,"提问待审核"));
+		statusList.add(new AskStatusEntity(LstConstants.AUDIT_ASK,"提问已审核"));
+		statusList.add(new AskStatusEntity(LstConstants.TRANS_ASK,"提问已翻译"));
+		statusList.add(new AskStatusEntity(LstConstants.ANSWER_ASK,"回答待审核"));
+		statusList.add(new AskStatusEntity(LstConstants.AUDIT_ANSWER,"回答已审核"));
+		statusList.add(new AskStatusEntity(LstConstants.TRANS_ANSWER,"回答已翻译"));
+		return statusList;
+	}
+	
+	@RequestMapping(params="toAudit",method = RequestMethod.GET)
+	public void toAudit(@RequestParam(required = true, value = "id" ) String id,HttpServletResponse response,HttpServletRequest request) throws Exception{
+		MiniDaoPage<LhDsAskColumnEntity> list =  lhDsAskColumnService.getAll(new LhDsAskColumnEntity(),1,100);
+		VelocityContext velocityContext = new VelocityContext();
+		LhDsAskEntity lhDsAsk = lhDsAskService.get(id);
+		List<AskStatusEntity> statusList = getStatusList();
+ 		String sessionid = request.getSession().getId();
+		velocityContext.put("sessionid", sessionid);
+		velocityContext.put("lhDsAsk",lhDsAsk);
+		velocityContext.put("columnList", list.getResults());
+		velocityContext.put("statusList", statusList);
+		String viewName = "jeecg/ask/lhDsAsk-audit.vm";
 		ViewVelocity.view(request,response,viewName,velocityContext);
 	}
 
@@ -150,6 +187,34 @@ public class LhDsAskController extends BaseController{
 		return j;
 	}
 
+	/**
+	 * 编辑
+	 * @return
+	 */
+	@RequestMapping(params = "doAudit",method ={RequestMethod.GET, RequestMethod.POST})
+	@ResponseBody
+	public AjaxJson doAudit(@ModelAttribute LhDsAskEntity lhDsAsk){
+		AjaxJson j = new AjaxJson();
+		try {
+			LhDsAskEntity oriAsk = lhDsAskService.get(lhDsAsk.getId());
+			Integer status = oriAsk.getAskStatus();
+			if(lhDsAsk.getReply().equals("pass")){
+				if(status==LstConstants.CREATE_ASK){
+					lhDsAsk.setAskStatus(LstConstants.AUDIT_ASK);
+				}
+				if(status==LstConstants.ANSWER_ASK){
+					lhDsAsk.setAskStatus(LstConstants.AUDIT_ANSWER);
+				}
+			}
+			lhDsAskService.update(lhDsAsk);
+			j.setMsg("编辑成功");
+		} catch (Exception e) {
+			j.setSuccess(false);
+			j.setMsg("编辑失败");
+		    e.printStackTrace();
+		}
+		return j;
+	}
 
 	/**
 	 * 删除

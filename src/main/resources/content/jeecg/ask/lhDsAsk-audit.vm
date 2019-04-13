@@ -10,7 +10,7 @@
 				<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/jeecg/lhDsAsk.do?list')"><span class="fa fa-arrow-circle-left"></span> 返回</button>
 				</div>
 				<div class="panel-body">
-					<form class="form-horizontal" role="form" id="dailogForm" action="$!{basePath}/jeecg/lhDsAsk.do?doEdit" method="POST">
+					<form class="form-horizontal" role="form" id="dailogForm" action="$!{basePath}/jeecg/lhDsAsk.do?doAudit" method="POST">
 						<input type="hidden" id="btn_sub" class="btn_sub" />
 						<input type="hidden" value="$!{lhDsAsk.id}" name="id" id="id" />
 								<div class="form-group mno">
@@ -47,8 +47,8 @@
 							<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">提问视频</label>
 							<div class="col-sm-8">
 								<input type="hidden" id="askUrl" name="askUrl" value="$!{lhDsAsk.askUrl}"/>
-								<div id="fileQueue1" style="width:200px;"></div>
-								<input type="file" name="uploadify1" id="uploadify1" />
+							<!--	<div id="fileQueue1" style="width:200px;"></div>
+								<input type="file" name="uploadify1" id="uploadify1" />	-->
 								<div id="pic_view_div1" style="width:320px; height:240px; display:none;">
 								<!--	<img src="$!{cmsMenu.imageHref}" width="320" height="240" id="pic_view" />	-->
                                     <video width="320" height="240" id="pic_view1" controls src="$!{basePath}/upload/img/lst/$!{lhDsAsk.askUrl}"></video>
@@ -65,8 +65,8 @@
 							<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">提问翻译视频</label>
 							<div class="col-sm-8">
 								<input type="hidden" id="transAskUrl" name="transAskUrl" value="$!{lhDsAsk.transAskUrl}"/>
-								<div id="fileQueue2" style="width:200px;"></div>
-								<input type="file" name="uploadify2" id="uploadify2" />
+							<!--	<div id="fileQueue2" style="width:200px;"></div>
+								<input type="file" name="uploadify2" id="uploadify2" />	-->
 								<div id="pic_view_div2" style="width:320px; height:240px; display:none;">
 								<!--	<img src="$!{cmsMenu.imageHref}" width="320" height="240" id="pic_view" />	-->
                                     <video width="320" height="240" id="pic_view2" controls src="$!{basePath}/upload/img/lst/$!{lhDsAsk.transAskUrl}"></video>
@@ -83,8 +83,8 @@
 							<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">回答视频</label>
 							<div class="col-sm-8">
 								<input type="hidden" id="answerUrl" name="answerUrl" value="$!{lhDsAsk.answerUrl}"/>
-								<div id="fileQueue3" style="width:200px;"></div>
-								<input type="file" name="uploadify3" id="uploadify3" />
+							<!--	<div id="fileQueue3" style="width:200px;"></div>
+								<input type="file" name="uploadify3" id="uploadify3" />	-->
 								<div id="pic_view_div3" style="width:320px; height:240px; display:none;">
 								<!--	<img src="$!{cmsMenu.imageHref}" width="320" height="240" id="pic_view" />	-->
                                     <video width="320" height="240" id="pic_view3" controls src="$!{basePath}/upload/img/lst/$!{lhDsAsk.answerUrl}"></video>
@@ -101,8 +101,8 @@
 							<label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">翻译回答视频</label>
 							<div class="col-sm-8">
 								<input type="hidden" id="transAnswerUrl" name="transAnswerUrl" value="$!{lhDsAsk.transAnswerUrl}"/>
-								<div id="fileQueue4" style="width:200px;"></div>
-								<input type="file" name="uploadify4" id="uploadify4" />
+							<!--	<div id="fileQueue4" style="width:200px;"></div>
+								<input type="file" name="uploadify4" id="uploadify4" />	-->
 								<div id="pic_view_div4" style="width:320px; height:240px; display:none;">
 								<!--	<img src="$!{cmsMenu.imageHref}" width="320" height="240" id="pic_view" />	-->
                                     <video width="320" height="240" id="pic_view4" controls src="$!{basePath}/upload/img/lst/$!{lhDsAsk.transAnswerUrl}"></video>
@@ -124,10 +124,14 @@
 								<div class="form-group mno">
 								    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">审核</label>
 								    <div class="col-sm-8">
-								    	<input type="text" value="$!{lhDsAsk.reply}" name="reply" id="reply" class="form-control" />
+								    <!--	<input type="text" value="$!{lhDsAsk.reply}" name="reply" id="reply" class="form-control" />	-->
+										<select id="reply" name="reply"  class="form-control">
+										 <option value="pass" >审核通过</option>
+										 <option value="deny" >拒绝</option>
+										</select>
 								    </div>
 								</div>
-								<div class="form-group mno">
+				<!--				<div class="form-group mno">
 								    <label for="inputEmail3" class="col-sm-2 control-label" style="text-align:left;">问题数量</label>
 								    <div class="col-sm-8">
 								    	<input type="text" value="$!{lhDsAsk.askNum}" name="askNum" id="askNum" class="form-control" />
@@ -192,7 +196,7 @@
 								    <div class="col-sm-8">
 								    	<input type="text" value="$!{lhDsAsk.formId}" name="formId" id="formId" class="form-control" />
 								    </div>
-								</div>	
+								</div>	-->
 					</form>
 				</div>
 			</div>

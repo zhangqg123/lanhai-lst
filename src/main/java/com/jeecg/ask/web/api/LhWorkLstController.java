@@ -31,6 +31,7 @@ import com.jeecg.ask.entity.LhDsAskColumnEntity;
 import com.jeecg.ask.entity.LhDsAskEntity;
 import com.jeecg.ask.service.LhDsAskColumnService;
 import com.jeecg.ask.service.LhDsAskService;
+import com.jeecg.ask.utils.LstConstants;
 
 /**
  * 描述：考试表
@@ -59,7 +60,13 @@ public class LhWorkLstController extends BaseController{
 			@RequestParam(required = false, value = "pageNumber", defaultValue = "1") int pageNo,
 			@RequestParam(required = false, value = "pageSize", defaultValue = "6") int pageSize) throws Exception {
 		AjaxJson j = new AjaxJson();
-		String guideStatus = request.getParameter("guide_status");
+		String askStatus = request.getParameter("ask_status");
+		if(askStatus!=null && askStatus.equals("transAsk")){
+			query.setAskStatus(LstConstants.TRANS_ASK);
+		}
+		if(askStatus!=null && askStatus.equals("transAnswer")){
+			query.setAskStatus(LstConstants.TRANS_ANSWER);
+		}
 		String categoryId = request.getParameter("category_id");
 		if(categoryId!=null && categoryId!="" && !categoryId.equals("all")){
 			query.setCategoryId(categoryId);
@@ -91,6 +98,12 @@ public class LhWorkLstController extends BaseController{
 		try {
 			if(oConvertUtils.isNotEmpty(askId)) {
 				LhDsAskEntity ask = lhDsAskService.get(askId);
+				if(ask.getAskStatus()==LstConstants.CREATE_ASK){
+					ask.setAskUrl(null);
+				}
+				if(ask.getAskStatus()==LstConstants.ANSWER_ASK){
+					ask.setAnswerUrl(null);
+				}
 				j.setObj(ask);
 				j.setSuccess(true);
 			}
