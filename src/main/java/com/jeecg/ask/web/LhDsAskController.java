@@ -158,11 +158,17 @@ public class LhDsAskController extends BaseController{
 		VelocityContext velocityContext = new VelocityContext();
 		LhDsAskEntity lhDsAsk = lhDsAskService.get(id);
 		List<AskStatusEntity> statusList = getStatusList();
+		for(AskStatusEntity status : statusList){
+			if(status.getId()==lhDsAsk.getAskStatus()){
+				lhDsAsk.setStatusName(status.getStatusName());
+				break;
+			}
+		}
  		String sessionid = request.getSession().getId();
 		velocityContext.put("sessionid", sessionid);
 		velocityContext.put("lhDsAsk",lhDsAsk);
 		velocityContext.put("columnList", list.getResults());
-		velocityContext.put("statusList", statusList);
+//		velocityContext.put("statusList", statusList);
 		String viewName = "jeecg/ask/lhDsAsk-audit.vm";
 		ViewVelocity.view(request,response,viewName,velocityContext);
 	}
@@ -196,8 +202,8 @@ public class LhDsAskController extends BaseController{
 	public AjaxJson doAudit(@ModelAttribute LhDsAskEntity lhDsAsk){
 		AjaxJson j = new AjaxJson();
 		try {
-			LhDsAskEntity oriAsk = lhDsAskService.get(lhDsAsk.getId());
-			Integer status = oriAsk.getAskStatus();
+//			LhDsAskEntity oriAsk = lhDsAskService.get(lhDsAsk.getId());
+			Integer status = lhDsAsk.getAskStatus();
 			if(lhDsAsk.getReply().equals("pass")){
 				if(status==LstConstants.CREATE_ASK){
 					lhDsAsk.setAskStatus(LstConstants.AUDIT_ASK);
