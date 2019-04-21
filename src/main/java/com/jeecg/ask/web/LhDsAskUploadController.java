@@ -2,18 +2,26 @@ package com.jeecg.ask.web;
 
 import java.io.File;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.jeecgframework.p3.core.common.utils.AjaxJson;
+import org.jeecgframework.p3.core.util.oConvertUtils;
 import org.jeecgframework.p3.core.util.plugin.ContextHolderUtils;
 import org.jeecgframework.p3.core.web.BaseController;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+
+import com.jeecg.ask.entity.LhDsAskEntity;
+import com.jeecg.ask.service.LhDsAskService;
+import com.jeecg.ask.utils.DeleteFileUtil;
 
  /**
  * 描述：</b>CmsUploadController<br>
@@ -24,7 +32,9 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 @Controller
 @RequestMapping("/jeecg/lhDsAsk/upload")
 public class LhDsAskUploadController extends BaseController{
-  
+	@Autowired
+	private LhDsAskService lhDsAskService;  
+	
 	@RequestMapping(value = "doUpload",method ={RequestMethod.POST,RequestMethod.GET})
 	@ResponseBody
 	public AjaxJson doUpload(MultipartHttpServletRequest request,HttpServletResponse response){
@@ -60,6 +70,39 @@ public class LhDsAskUploadController extends BaseController{
 			j.setMsg("保存失败");
 		}
 		System.out.println(j.getObj());
+		return j;
+	}
+	
+	@RequestMapping(value = "doDelete",method = {RequestMethod.GET,RequestMethod.POST})
+	@ResponseBody
+	public AjaxJson doUpdatePublish(@RequestParam(required = true, value = "askUrl" ) String askUrl, 
+			@RequestParam(required = true, value = "askId" ) String askId,HttpServletResponse response,HttpServletRequest request) {
+		AjaxJson j = new AjaxJson();
+		boolean flag = false;
+		try {
+			if(oConvertUtils.isNotEmpty(askUrl)) {
+		        StringBuffer path = new StringBuffer();
+		        path.append("upload");
+		        path.append(File.separator);
+		        path.append("img");
+		        path.append(File.separator);
+		        path.append("lst");
+		        
+		        String uploadDir = ContextHolderUtils.getRequest().getSession().getServletContext().getRealPath(path.toString());   
+		        String fileUrl = uploadDir + File.separator +askUrl;
+		        flag=DeleteFileUtil.deleteFile(fileUrl);
+		        if(flag){
+		        	LhDsAskEntity lhDsAskEntity=new LhDsAskEntity();
+		        	lhDsAskEntity.setId(askId);
+		        	lhDsAskEntity.setAskUrl("");
+		        	lhDsAskService.update(lhDsAskEntity);
+		        }
+			}
+			j.setSuccess(flag);
+		} catch (Exception e) {
+			e.printStackTrace();
+			j.setSuccess(flag);
+		}
 		return j;
 	}
 }

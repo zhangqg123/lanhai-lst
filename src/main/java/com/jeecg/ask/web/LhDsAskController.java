@@ -164,9 +164,12 @@ public class LhDsAskController extends BaseController{
 				break;
 			}
 		}
+		String baseUpload = "/upload/img/lst/";
+//		lhDsAsk.setAskUrl(lhDsAsk.getAskUrl().trim());
  		String sessionid = request.getSession().getId();
 		velocityContext.put("sessionid", sessionid);
 		velocityContext.put("lhDsAsk",lhDsAsk);
+		velocityContext.put("baseUpload",baseUpload);
 		velocityContext.put("columnList", list.getResults());
 //		velocityContext.put("statusList", statusList);
 		String viewName = "jeecg/ask/lhDsAsk-audit.vm";

@@ -117,6 +117,7 @@ public class ApiLstController extends BaseController {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 		try {
 //			String existFile = request.getParameter("existFile");
+			String openId = request.getParameter("openId");
 //			String basePath = request.getSession().getServletContext().getRealPath("/");
 			//获取所有文件名称  
 //	        String basePath=ResourceUtil.getConfigByName("webUploadpath");//demo中设置为D://upFiles,实际项目应因事制宜
@@ -136,13 +137,13 @@ public class ApiLstController extends BaseController {
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");  
 		        String datedir = sdf.format(new Date());  
 //			    String filePath = "upload/img/lst/"+datedir+"/"; 
-			    String filePath = "upload/img/lst/"; 
+			    String filePath = "upload/img/lst/"+openId+"/"; 
 			    File file = new File(basePath+filePath);
 				if (!file.exists()) {
 					file.mkdirs();// 创建文件根目录
 				}
-				filePath = filePath+fileName;
-			    String savePath = basePath+filePath;
+				String filePathName = filePath+fileName;
+			    String savePath = basePath+filePathName;
 
 			    System.out.println(savePath);
 			    File newFile = new File(savePath);  
@@ -152,6 +153,7 @@ public class ApiLstController extends BaseController {
 				ImageUtil.zoomImageScale(newFile, savePath,300);
 			    attributes.put("url", filePath);
 			    attributes.put("fileKey", fileName);
+			    break;
 			}
 			j.setMsg("文件上传成功");
 			j.setAttributes(attributes);
