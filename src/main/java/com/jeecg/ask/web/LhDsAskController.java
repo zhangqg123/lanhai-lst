@@ -45,6 +45,8 @@ public class LhDsAskController extends BaseController{
   @Autowired
   private LhDsAskColumnService lhDsAskColumnService;
   
+	private String baseUpload = "/upload/img/lst/";
+	private String uploadOpenId = "longshi";
 	/**
 	  * 列表页面
 	  * @return
@@ -95,6 +97,8 @@ public class LhDsAskController extends BaseController{
 		String sessionid = request.getSession().getId();
 		velocityContext.put("sessionid", sessionid);
 		velocityContext.put("columnList", list.getResults());
+		velocityContext.put("baseUpload",baseUpload);
+		velocityContext.put("uploadOpenId",uploadOpenId);
 		String viewName = "jeecg/ask/lhDsAsk-add.vm";
 		ViewVelocity.view(request,response,viewName,velocityContext);
 	}
@@ -109,9 +113,12 @@ public class LhDsAskController extends BaseController{
 		AjaxJson j = new AjaxJson();
 		try {
 		    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");  
-		    String sDate = simpleDateFormat.format(new Date());  
+		    String sDate = simpleDateFormat.format(new Date()); 
+		    
 		    lhDsAsk.setAskDate(simpleDateFormat.parse(sDate));
-			lhDsAskService.insert(lhDsAsk);
+			lhDsAsk.setAskStatus(LstConstants.TRANS_ANSWER);
+			lhDsAsk.setStatusName("回答已翻译");
+		    lhDsAskService.insert(lhDsAsk);
 			j.setMsg("保存成功");
 		} catch (Exception e) {
 			j.setSuccess(false);
@@ -136,6 +143,9 @@ public class LhDsAskController extends BaseController{
 		velocityContext.put("sessionid", sessionid);
 		velocityContext.put("lhDsAsk",lhDsAsk);
 		velocityContext.put("columnList", list.getResults());
+		velocityContext.put("baseUpload",baseUpload);
+		velocityContext.put("uploadOpenId",uploadOpenId);
+		
 		velocityContext.put("statusList", statusList);
 		String viewName = "jeecg/ask/lhDsAsk-edit.vm";
 		ViewVelocity.view(request,response,viewName,velocityContext);
@@ -164,7 +174,7 @@ public class LhDsAskController extends BaseController{
 				break;
 			}
 		}
-		String baseUpload = "/upload/img/lst/";
+
 //		lhDsAsk.setAskUrl(lhDsAsk.getAskUrl().trim());
  		String sessionid = request.getSession().getId();
 		velocityContext.put("sessionid", sessionid);

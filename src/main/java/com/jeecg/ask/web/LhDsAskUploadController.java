@@ -40,6 +40,7 @@ public class LhDsAskUploadController extends BaseController{
 	public AjaxJson doUpload(MultipartHttpServletRequest request,HttpServletResponse response){
 		AjaxJson j = new AjaxJson();
 		try {
+			String uploadOpenId = request.getParameter("uploadOpenId");
 			MultipartFile uploadify = request.getFile("file");
 	        byte[] bytes = uploadify.getBytes();  
 	        String realFilename=uploadify.getOriginalFilename();
@@ -53,6 +54,8 @@ public class LhDsAskUploadController extends BaseController{
 	        path.append("img");
 	        path.append(File.separator);
 	        path.append("lst");
+	        path.append(File.separator);
+	        path.append(uploadOpenId);
 	        
 	        String uploadDir = ContextHolderUtils.getRequest().getSession().getServletContext().getRealPath(path.toString());   
 	        File dirPath = new File(uploadDir);  
