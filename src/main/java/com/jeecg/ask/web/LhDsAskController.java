@@ -71,7 +71,32 @@ public class LhDsAskController extends BaseController{
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-}
+	}
+	
+	@RequestMapping(params = "blacklist",method = {RequestMethod.GET,RequestMethod.POST})
+	public void blacklist(@ModelAttribute LhDsAskEntity query,HttpServletRequest request,HttpServletResponse response,
+			@RequestParam(required = false, value = "pageNo", defaultValue = "1") int pageNo,
+			@RequestParam(required = false, value = "pageSize", defaultValue = "10") int pageSize) throws Exception{
+			try {
+			 	LOG.info(request, " back list");
+
+			 	query.setAskStatus(LstConstants.BLACK_LIST);
+
+			 	//分页数据
+				MiniDaoPage<LhDsAskColumnEntity> clist =  lhDsAskColumnService.getAll(new LhDsAskColumnEntity(),1,100);
+				MiniDaoPage<LhDsAskEntity> list =  lhDsAskService.getAll(query,pageNo,pageSize);
+				List<AskStatusEntity> statusList = getStatusList();
+				VelocityContext velocityContext = new VelocityContext();
+				velocityContext.put("lhDsAsk",query);
+				velocityContext.put("columnList", clist.getResults());
+				velocityContext.put("statusList", statusList);
+				velocityContext.put("pageInfos",SystemTools.convertPaginatedList(list));
+				String viewName = "jeecg/ask/lhDsAsk-blacklist.vm";
+				ViewVelocity.view(request,response,viewName,velocityContext);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+	}
 
 	 /**
 	  * 详情
@@ -159,6 +184,7 @@ public class LhDsAskController extends BaseController{
 		statusList.add(new AskStatusEntity(LstConstants.ANSWER_ASK,"回答待审核"));
 		statusList.add(new AskStatusEntity(LstConstants.AUDIT_ANSWER,"回答已审核"));
 		statusList.add(new AskStatusEntity(LstConstants.TRANS_ANSWER,"回答已翻译"));
+		statusList.add(new AskStatusEntity(LstConstants.BLACK_LIST,"提问黑名单"));
 		return statusList;
 	}
 	
@@ -217,19 +243,39 @@ public class LhDsAskController extends BaseController{
 		try {
 //			LhDsAskEntity oriAsk = lhDsAskService.get(lhDsAsk.getId());
 			Integer status = lhDsAsk.getAskStatus();
-			if(lhDsAsk.getReply().equals("pass")){
-				if(status==LstConstants.CREATE_ASK){
-					lhDsAsk.setAskStatus(LstConstants.AUDIT_ASK);
+			if(lhDsAsk.getReply().equals("blacklist")){
+				lhDsAskService.doBlack(lhDsAsk);
+			}else{
+				if(lhDsAsk.getReply().equals("pass")){
+					if(status==LstConstants.CREATE_ASK){
+						lhDsAsk.setAskStatus(LstConstants.AUDIT_ASK);
+					}
+					if(status==LstConstants.ANSWER_ASK){
+						lhDsAsk.setAskStatus(LstConstants.AUDIT_ANSWER);
+					}
 				}
-				if(status==LstConstants.ANSWER_ASK){
-					lhDsAsk.setAskStatus(LstConstants.AUDIT_ANSWER);
-				}
+				lhDsAskService.update(lhDsAsk);
+				
+				j.setMsg("编辑成功");
 			}
-			lhDsAskService.update(lhDsAsk);
-			j.setMsg("编辑成功");
 		} catch (Exception e) {
 			j.setSuccess(false);
 			j.setMsg("编辑失败");
+		    e.printStackTrace();
+		}
+		return j;
+	}
+	@RequestMapping(params = "doRestore",method ={RequestMethod.GET, RequestMethod.POST})
+	@ResponseBody
+	public AjaxJson doRestore(@ModelAttribute LhDsAskEntity lhDsAsk){
+		AjaxJson j = new AjaxJson();
+		try {
+			lhDsAskService.doRestore(lhDsAsk);
+			j.setMsg("解冻成功");
+			
+		} catch (Exception e) {
+			j.setSuccess(false);
+			j.setMsg("解冻失败");
 		    e.printStackTrace();
 		}
 		return j;

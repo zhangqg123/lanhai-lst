@@ -12,12 +12,17 @@
 		<version>1.0.0-SNAPSHOT</version>
 		<relativePath>../parent/pom.xml</relativePath>
 	</parent>
-
 	<dependencies>
 		<!-- 引入jeecg-p3开发依赖jar -->
 		<dependency>
 			<groupId>org.jeecgframework.p3</groupId>
 			<artifactId>jeecg-p3-start-quick</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.jeecgframework.p3</groupId>
+			<artifactId>jeecg-p3-biz-lhs</artifactId>
+			<version>1.0.0</version>
+		</dependency>
 	</dependencies>
+
 </project>

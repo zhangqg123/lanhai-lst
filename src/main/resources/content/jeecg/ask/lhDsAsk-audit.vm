@@ -124,6 +124,7 @@
 										 <option> --请选择--</option>	
 										 <option value="pass" >审核通过</option>
 										 <option value="deny" >拒绝</option>
+										 <option value="blacklist" >黑名单</option>
 										</select>
 								    </div>
 								</div>

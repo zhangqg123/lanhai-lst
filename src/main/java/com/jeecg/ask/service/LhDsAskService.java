@@ -2,6 +2,7 @@ package com.jeecg.ask.service;
 
 import org.jeecgframework.minidao.annotation.Param;
 import org.jeecgframework.minidao.pojo.MiniDaoPage;
+
 import com.jeecg.ask.entity.LhDsAskEntity;
 
 /**
@@ -22,5 +23,9 @@ public interface LhDsAskService {
 	public void delete(String id);
 	
 	public void batchDelete(String[] ids);
+
+	public void doBlack(LhDsAskEntity lhDsAsk);
+
+	public void doRestore(LhDsAskEntity lhDsAsk);
 	
 }

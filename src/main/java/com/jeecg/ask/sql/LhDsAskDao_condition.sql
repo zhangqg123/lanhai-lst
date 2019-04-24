@@ -37,6 +37,8 @@
 		<#if ( lhDsAsk.askStatus )?? && lhDsAsk.askStatus ?length gt 0>
 		    /* 提问状态 */
 			and lda.ASK_STATUS = :lhDsAsk.askStatus
+		<#else>
+			and lda.ASK_STATUS < 77
 		</#if>
 		<#if ( lhDsAsk.askPersonId )?? && lhDsAsk.askPersonId ?length gt 0>
 		    /* 提问人 */
@@ -85,4 +87,8 @@
 		<#if ( lhDsAsk.formId )?? && lhDsAsk.formId ?length gt 0>
 		    /* formId */
 			and lda.FORM_ID = :lhDsAsk.formId
+		</#if>
+		<#if ( lhDsAsk.black )?? && lhDsAsk.black ?length gt 0>
+		    /* 备注 */
+			and lda.black = :lhDsAsk.black
 		</#if>

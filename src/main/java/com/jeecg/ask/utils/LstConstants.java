@@ -7,4 +7,5 @@ public class LstConstants {
 	public static final Integer ANSWER_ASK = 31;
 	public static final Integer AUDIT_ANSWER = 32;
 	public static final Integer TRANS_ANSWER = 41;
+	public static final Integer BLACK_LIST = 77;
 }

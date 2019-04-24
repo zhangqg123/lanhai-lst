@@ -5,32 +5,11 @@
 <body style='overflow:scroll;overflow-x:hidden'>
 	<div class="container bs-docs-container" style="width:100%;">
 		<div class="row">
-			<form role="form" class="form-inline" action="$!{basePath}/jeecg/lhDsAsk.do?list" method="post"  id="formSubmit">
+			<form role="form" class="form-inline" action="$!{basePath}/jeecg/lhDsAsk.do?blacklist" method="post"  id="formSubmit">
 				<div  class="col-md-10" style="width:100%">
 					<div class="panel panel-default">
 						<div class="panel-heading">列表</div>
 						<div class="panel-body">
-							#if($!{lhDsAsk.askStatus} != 77)
-							<div class="search">
-		
-										 <div class="form-group col-sm-3">
-											<label for="askStatus" class="control-label col-sm-4 line34">提问状态</label>
-											<div class="col-sm-8">
-											<!--	<input type="text" name="askStatus" id="askStatus" value="$!{lhDsAsk.askStatus}" class="form-control">	-->
-        										<select name="askStatus" id="askStatus" class="form-control">
-        										 <option value="" >分类</option>
-        										 #foreach($status in $statusList)
-        											<option value="${status.id}" #if($!{lhDsAsk.askStatus} == ${status.id})selected#end>--$!{status.statusName}</option>
-        										 #end
-        										</select>
-											</div>
-										 </div>
-
-								<button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> 搜  索</button>
-								<button type="button" class="btn btn-primary" onclick="searchReset()"><i class="fa fa-refresh"></i> 重  置</button>
-								<div class="clearfix"></div>
-							</div>
-							#end
 							<div id="legend">
 								<legend  class="le">
 									<button type="button" class="btn btn-primary" onclick="doUrl('$!{basePath}/jeecg/lhDsAsk.do?toAdd')" ><i class="fa fa-plus"></i> 新增</button> 
@@ -104,16 +83,8 @@
 														<td>$!{info.remark}</td>
 														<td>$!{info.formId}</td>	-->
 											<td class="last">
-											#if($!{info.askStatus} != 77)	
-											<a class="btn btn-primary btn-xs"  href="javascript:doUrl('$!{basePath}/jeecg/lhDsAsk.do?toEdit&id=$!{info.id}')" ><i class="fa fa-edit"></i> 编辑</a>
-											#end
 											<a class="btn btn-danger btn-xs" href="javascript:delData('$!{basePath}/jeecg/lhDsAsk.do?doDelete&id=$!{info.id}')"><i class="fa fa-trash-o"></i> 删除</a>
-											#if($!{info.askStatus} == 11 || $!{info.askStatus} == 31)
-											<a class="btn btn-success btn-xs"  href="javascript:doUrl('$!{basePath}/jeecg/lhDsAsk.do?toAudit&id=$!{info.id}')" ><i class="fa fa-edit"></i> 审核</a>
-											#end	
-											#if($!{info.askStatus} == 77 )
 											<a class="btn btn-success btn-xs"  href="javascript:doRestore('$!{basePath}/jeecg/lhDsAsk.do?doRestore&id=$!{info.id}')" ><i class="fa fa-edit"></i> 解冻</a>
-											#end	
 											</td>
 										</tr>
 									 #end

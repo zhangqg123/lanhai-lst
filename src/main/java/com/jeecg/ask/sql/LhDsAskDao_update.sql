@@ -66,4 +66,8 @@ SET
 	   <#if lhDsAsk.formId ?exists>
 		   FORM_ID = :lhDsAsk.formId,
 		</#if>
+	   <#if lhDsAsk.black ?exists>
+		   black = :lhDsAsk.black,
+		</#if>
+		
 WHERE id = :lhDsAsk.id

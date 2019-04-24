@@ -22,7 +22,8 @@ INSERT  INTO
       ,REPLY                          
       ,PROCESSINSTANCEID              
       ,REMARK                         
-      ,FORM_ID                        
+      ,FORM_ID               
+      ,black
       ) 
 values
       (
@@ -48,4 +49,5 @@ values
       ,:lhDsAsk.processinstanceid             
       ,:lhDsAsk.remark                        
       ,:lhDsAsk.formId                        
+      ,:lhDsAsk.black  
       )
