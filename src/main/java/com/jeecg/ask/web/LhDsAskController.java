@@ -60,7 +60,7 @@ public class LhDsAskController extends BaseController{
 			 	//分页数据
 				MiniDaoPage<LhDsAskColumnEntity> clist =  lhDsAskColumnService.getAll(new LhDsAskColumnEntity(),1,100);
 				MiniDaoPage<LhDsAskEntity> list =  lhDsAskService.getAll(query,pageNo,pageSize);
-				List<AskStatusEntity> statusList = getStatusList();
+				List<AskStatusEntity> statusList = LstConstants.getStatusList();
 				VelocityContext velocityContext = new VelocityContext();
 				velocityContext.put("lhDsAsk",query);
 				velocityContext.put("columnList", clist.getResults());
@@ -85,7 +85,7 @@ public class LhDsAskController extends BaseController{
 			 	//分页数据
 				MiniDaoPage<LhDsAskColumnEntity> clist =  lhDsAskColumnService.getAll(new LhDsAskColumnEntity(),1,100);
 				MiniDaoPage<LhDsAskEntity> list =  lhDsAskService.getAll(query,pageNo,pageSize);
-				List<AskStatusEntity> statusList = getStatusList();
+				List<AskStatusEntity> statusList = LstConstants.getStatusList();
 				VelocityContext velocityContext = new VelocityContext();
 				velocityContext.put("lhDsAsk",query);
 				velocityContext.put("columnList", clist.getResults());
@@ -162,7 +162,7 @@ public class LhDsAskController extends BaseController{
 		MiniDaoPage<LhDsAskColumnEntity> list =  lhDsAskColumnService.getAll(new LhDsAskColumnEntity(),1,100);
 		VelocityContext velocityContext = new VelocityContext();
 		LhDsAskEntity lhDsAsk = lhDsAskService.get(id);
-		List<AskStatusEntity> statusList = getStatusList();
+		List<AskStatusEntity> statusList = LstConstants.getStatusList();
 		
 		String sessionid = request.getSession().getId();
 		velocityContext.put("sessionid", sessionid);
@@ -175,25 +175,13 @@ public class LhDsAskController extends BaseController{
 		String viewName = "jeecg/ask/lhDsAsk-edit.vm";
 		ViewVelocity.view(request,response,viewName,velocityContext);
 	}
-
-	private List<AskStatusEntity> getStatusList() {
-		List<AskStatusEntity> statusList=new ArrayList<AskStatusEntity>();
-		statusList.add(new AskStatusEntity(LstConstants.CREATE_ASK,"提问待审核"));
-		statusList.add(new AskStatusEntity(LstConstants.AUDIT_ASK,"提问已审核"));
-		statusList.add(new AskStatusEntity(LstConstants.TRANS_ASK,"提问已翻译"));
-		statusList.add(new AskStatusEntity(LstConstants.ANSWER_ASK,"回答待审核"));
-		statusList.add(new AskStatusEntity(LstConstants.AUDIT_ANSWER,"回答已审核"));
-		statusList.add(new AskStatusEntity(LstConstants.TRANS_ANSWER,"回答已翻译"));
-		statusList.add(new AskStatusEntity(LstConstants.BLACK_LIST,"提问黑名单"));
-		return statusList;
-	}
 	
 	@RequestMapping(params="toAudit",method = RequestMethod.GET)
 	public void toAudit(@RequestParam(required = true, value = "id" ) String id,HttpServletResponse response,HttpServletRequest request) throws Exception{
 		MiniDaoPage<LhDsAskColumnEntity> list =  lhDsAskColumnService.getAll(new LhDsAskColumnEntity(),1,100);
 		VelocityContext velocityContext = new VelocityContext();
 		LhDsAskEntity lhDsAsk = lhDsAskService.get(id);
-		List<AskStatusEntity> statusList = getStatusList();
+		List<AskStatusEntity> statusList = LstConstants.getStatusList();
 		for(AskStatusEntity status : statusList){
 			if(status.getId()==lhDsAsk.getAskStatus()){
 				lhDsAsk.setStatusName(status.getStatusName());
@@ -252,6 +240,14 @@ public class LhDsAskController extends BaseController{
 					}
 					if(status==LstConstants.ANSWER_ASK){
 						lhDsAsk.setAskStatus(LstConstants.AUDIT_ANSWER);
+					}
+				}
+				if(lhDsAsk.getReply().equals("deny")){
+					if(status==LstConstants.CREATE_ASK){
+						lhDsAsk.setAskStatus(LstConstants.ASK_DENY);
+					}
+					if(status==LstConstants.ANSWER_ASK){
+						lhDsAsk.setAskStatus(LstConstants.ANSWER_DENY);
 					}
 				}
 				lhDsAskService.update(lhDsAsk);
