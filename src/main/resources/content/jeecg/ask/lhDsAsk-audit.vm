@@ -10,7 +10,7 @@
 				<button type="button" class="btn btn-default" id="formReturn" data-dismiss="modal" onclick="doUrl('$!{basePath}/jeecg/lhDsAsk.do?list')"><span class="fa fa-arrow-circle-left"></span> 返回</button>
 				</div>
 				<div class="panel-body">
-					<form class="form-horizontal" role="form" id="dailogForm" action="$!{basePath}/jeecg/lhDsAsk.do?doAudit" method="POST">
+					<form class="form-horizontal" role="form" id="dailogForm" action="$!{basePath}/lhs/lhDsAsk.do?doAudit" method="POST">
 						<input type="hidden" id="btn_sub" class="btn_sub" />
 						<input type="hidden" value="$!{lhDsAsk.id}" name="id" id="id" />
 								<div class="form-group mno">
